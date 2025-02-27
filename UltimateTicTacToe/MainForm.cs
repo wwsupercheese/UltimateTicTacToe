@@ -13,10 +13,17 @@ namespace UltimateTicTacToe
         private Label statusLabel;           // Метка статуса игры
         private Button btnNewGame;           // Кнопка новой игры
 
+        // Добавляем новые поля
+        private GameBot _bot;
+        private bool _botMode;
+        private Button _btnVsBot;
+        private bool _botPlayerX;
+
         public MainForm()
         {
             InitializeComponents();
             InitializeGame();
+            _bot = new GameBot();
         }
 
         // Инициализация компонентов интерфейса
@@ -52,9 +59,26 @@ namespace UltimateTicTacToe
             };
             btnNewGame.Click += BtnNewGame_Click;
 
-            Controls.AddRange([mainPanel, statusLabel, btnNewGame]);
+            // Кнопка включения бота
+            _btnVsBot = new Button
+            {
+                Text = "VS Bot",
+                Location = new Point(300, 500),
+                Size = new Size(80, 30)
+            };
+            _btnVsBot.Click += BtnVsBot_Click;
+            
+            Controls.AddRange([mainPanel, statusLabel, btnNewGame, _btnVsBot]);
         }
-
+        private void BtnVsBot_Click(object sender, EventArgs e)
+        {
+            _botMode = !_botMode;
+            if (_botMode)
+            {
+                _botPlayerX = isPlayerX;
+                MakeBotMove();
+            }
+        }
         // Инициализация новой игры
         private void InitializeGame()
         {
@@ -87,15 +111,42 @@ namespace UltimateTicTacToe
         {
             var smallBoard = (SmallBoardUC)sender;
             Point bigPosition = new Point(smallBoard.BoardRow, smallBoard.BoardCol);
-
             if (IsMoveValid(bigPosition, e.SmallPosition))
             {
                 MakeMove(bigPosition, e.SmallPosition);
                 UpdateGameState(bigPosition, e.SmallPosition);
                 CheckGlobalWinner();
             }
+            if (_botMode && (_botPlayerX == isPlayerX))
+            {
+                MakeBotMove();
+            }
         }
-
+        private void MakeBotMove()
+        {
+            try
+            {
+                var (boardPos, cellPos) = _bot.GetBotMove(board, currentActiveBoard);
+                var targetBoard = FindBoardControl(boardPos);
+                targetBoard?.PerformCellClick(cellPos);
+            }
+            catch
+            {
+                _botMode = false;
+                MessageBox.Show("Bot can't make a move!");
+            }
+        }
+        private SmallBoardUC FindBoardControl(Point boardPos)
+        {
+            foreach (Control control in mainPanel.Controls)
+            {
+                if (control is SmallBoardUC sb &&
+                    sb.BoardRow == boardPos.X &&
+                    sb.BoardCol == boardPos.Y)
+                    return sb;
+            }
+            return null;
+        }
         // Проверка допустимости хода
         private bool IsMoveValid(Point bigPos, Point smallPos)
         {
@@ -204,7 +255,7 @@ namespace UltimateTicTacToe
     }
 
     // Класс основной игровой доски (9x9)
-    class UltimateBoard
+    public class UltimateBoard
     {
         private readonly SmallBoard[,] boards = new SmallBoard[3, 3];
 
@@ -414,6 +465,11 @@ namespace UltimateTicTacToe
                 btn.Enabled = false;
                 btn.BackColor = BackColor;
             }
+        }
+        public void PerformCellClick(Point cellPos)
+        {
+            if (cells[cellPos.X, cellPos.Y].Enabled)
+                cells[cellPos.X, cellPos.Y].PerformClick();
         }
     }
     
