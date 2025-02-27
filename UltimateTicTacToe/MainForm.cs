@@ -23,14 +23,15 @@ namespace UltimateTicTacToe
         private void InitializeComponents()
         {
             // Настройка основной формы
-            ClientSize = new Size(500, 550);
+            ClientSize = new Size(490, 540);
             Text = "Ultimate Tic-Tac-Toe";
+            FormBorderStyle = FormBorderStyle.FixedSingle;
 
             // Панель игрового поля
             mainPanel = new Panel
             {
                 Location = new Point(10, 10),
-                Size = new Size(480, 480),
+                Size = new Size(470, 470),
                 BackColor = Color.White
             };
 
@@ -51,7 +52,7 @@ namespace UltimateTicTacToe
             };
             btnNewGame.Click += BtnNewGame_Click;
 
-            Controls.AddRange(new Control[] { mainPanel, statusLabel, btnNewGame });
+            Controls.AddRange([mainPanel, statusLabel, btnNewGame]);
         }
 
         // Инициализация новой игры
@@ -98,9 +99,7 @@ namespace UltimateTicTacToe
         // Проверка допустимости хода
         private bool IsMoveValid(Point bigPos, Point smallPos)
         {
-            // Ход разрешен если:
-            // 1. Активная доска не выбрана (-1) ИЛИ
-            // 2. Выбрана правильная доска и клетка доступна
+            // Активная доска не выбрана или выбрана правильная доска и клетка доступна
             return (currentActiveBoard.X == -1) ||
                    (bigPos == currentActiveBoard && board.CanMakeMove(bigPos, smallPos));
         }
@@ -168,9 +167,7 @@ namespace UltimateTicTacToe
                     // Обновление доступности клеток
                     sb.UpdateCellsAccessibility(
                         isActive,
-                        isActive ? (Func<Point, bool>)(
-                            pos => board.CanMakeMove(new Point(sb.BoardRow, sb.BoardCol), pos)
-                        ) : pos => false
+                        isActive ? (pos => board.CanMakeMove(new Point(sb.BoardRow, sb.BoardCol), pos)) : pos => false
                     );
                 }
             }
@@ -203,6 +200,11 @@ namespace UltimateTicTacToe
 
         // Обработчик новой игры
         private void BtnNewGame_Click(object sender, EventArgs e) => InitializeGame();
+
+        private void InitializeComponent()
+        {
+
+        }
     }
 
     // Класс основной игровой доски (9x9)
@@ -362,8 +364,8 @@ namespace UltimateTicTacToe
                         Tag = new Point(row, col),
                         FlatStyle = FlatStyle.Flat,
                         Font = new Font("Arial", 16),
-                        BackColor = Color.White,
-                        Enabled = false // По умолчанию отключены
+                        //BackColor = Color.White,
+                        TabStop = false,
                     };
                     cells[row, col].Click += Cell_Click;
                     Controls.Add(cells[row, col]);
