@@ -76,6 +76,7 @@ namespace UltimateTicTacToe
             if (_botMode)
             {
                 _botPlayerX = isPlayerX;
+                _bot.setGameBot(isPlayerX);
                 MakeBotMove();
             }
         }
@@ -86,6 +87,7 @@ namespace UltimateTicTacToe
             CreateBoardUI();
             currentActiveBoard = new Point(-1, -1);
             isPlayerX = true;
+            _botMode = false;
             UpdateStatusLabel();
             HighlightActiveBoard();
         }
@@ -257,7 +259,7 @@ namespace UltimateTicTacToe
     // Класс основной игровой доски (9x9)
     public class UltimateBoard
     {
-        private readonly SmallBoard[,] boards = new SmallBoard[3, 3];
+        readonly SmallBoard[,] boards = new SmallBoard[3, 3];
 
         public UltimateBoard()
         {
@@ -265,7 +267,11 @@ namespace UltimateTicTacToe
                 for (int j = 0; j < 3; j++)
                     boards[i, j] = new SmallBoard();
         }
-
+        
+        public char getCell(int X, int Y, int x, int y)
+        {
+            return boards[X,Y].Cells[x,y];
+        }
         // Проверка доступности клетки
         public bool CanMakeMove(Point bigPos, Point smallPos) =>
             boards[bigPos.X, bigPos.Y].IsCellAvailable(smallPos.X, smallPos.Y);
