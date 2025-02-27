@@ -201,10 +201,6 @@ namespace UltimateTicTacToe
         // Обработчик новой игры
         private void BtnNewGame_Click(object sender, EventArgs e) => InitializeGame();
 
-        private void InitializeComponent()
-        {
-
-        }
     }
 
     // Класс основной игровой доски (9x9)
