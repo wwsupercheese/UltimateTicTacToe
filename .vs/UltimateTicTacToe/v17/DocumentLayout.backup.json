@@ -36,7 +36,7 @@
               "RelativeDocumentMoniker": "UltimateTicTacToe\\GameBot.cs",
               "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\GameBot.cs",
               "RelativeToolTip": "UltimateTicTacToe\\GameBot.cs",
-              "ViewState": "AgIAADIAAAAAAAAAAAAwwBQAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwBoAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-27T16:16:24.614Z",
               "EditorCaption": ""
@@ -44,14 +44,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "Title": "MainForm.cs [Design]",
               "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
               "RelativeDocumentMoniker": "UltimateTicTacToe\\MainForm.cs",
-              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]*",
-              "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]*",
+              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs [Design]",
+              "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-27T15:35:11.902Z",
-              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
+              "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
@@ -59,9 +59,9 @@
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
               "RelativeDocumentMoniker": "UltimateTicTacToe\\MainForm.cs",
-              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs*",
-              "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs*",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAowFYAAAAMAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
+              "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs",
+              "ViewState": "AgIAAAgBAAAAAAAAAAAAABcBAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-27T11:03:10.497Z",
               "EditorCaption": ""

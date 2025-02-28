@@ -13,13 +13,16 @@ namespace UltimateTicTacToe
         private Label statusLabel;           // Метка статуса игры
         private Button btnNewGame;           // Кнопка новой игры
         private Button btnHelp;              // Кнопка справки
-
+        private NumericUpDown nudDepth;      
+        private NumericUpDown nudAlpha;
+        private Label lblDepth;
+        private Label lblAlpha;
 
         private GameBot _bot;
-        private bool _botMode;
+        public bool _botMode;
         private Button _btnVsBot;
-        private bool _botPlayerX;
-
+        public bool _botPlayerX;
+        private CancellationTokenSource _botTokenSource;
         public MainForm()
         {
             InitializeComponents();
@@ -31,7 +34,7 @@ namespace UltimateTicTacToe
         private void InitializeComponents()
         {
             // Настройка основной формы
-            ClientSize = new Size(490, 540);
+            ClientSize = new Size(490, 570);
             Text = "Ultimate Tic-Tac-Toe";
             FormBorderStyle = FormBorderStyle.FixedSingle;
 
@@ -47,7 +50,7 @@ namespace UltimateTicTacToe
             statusLabel = new Label
             {
                 AutoSize = true,
-                Location = new Point(10, 500),
+                Location = new Point(10, 485),
                 Font = new Font("Arial", 12)
             };
 
@@ -55,7 +58,7 @@ namespace UltimateTicTacToe
             btnNewGame = new Button
             {
                 Text = "New Game",
-                Location = new Point(400, 500),
+                Location = new Point(400, 530),
                 Size = new Size(80, 30)
             };
             btnNewGame.Click += BtnNewGame_Click;
@@ -64,92 +67,157 @@ namespace UltimateTicTacToe
             _btnVsBot = new Button
             {
                 Text = "VS Bot",
-                Location = new Point(310, 500),
+                Location = new Point(220, 530),
                 Size = new Size(80, 30)
             };
             _btnVsBot.Click += BtnVsBot_Click;
 
-            /*
+            
             // Кнопка справки
             btnHelp = new Button
             {
-                Text = "Справка",
-                Location = new Point(230, 500),
+                Text = "Help",
+                Location = new Point(310, 530),
                 Size = new Size(80, 30),
                 BackColor = Color.LightGoldenrodYellow,
                 FlatStyle = FlatStyle.Popup
             };
             btnHelp.Click += BtnHelp_Click;
 
-            // Обновляем позиции существующих кнопок
-            //btnNewGame.Location = new Point(300, 500);
-            //_btnVsBot.Location = new Point(400, 500);
+            // Элементы управления ботом
+            lblDepth = new Label
+            {
+                Text = "Глубина поиска:",
+                Location = new Point(10, 510),
+                AutoSize = true
+            };
+
+            nudDepth = new NumericUpDown
+            {
+                Minimum = 1,
+                Maximum = 5,
+                Value = 3,
+                Location = new Point(160, 510),
+                Size = new Size(50, 20)
+            };
+
+            lblAlpha = new Label
+            {
+                Text = "Коэффициент точности:",
+                Location = new Point(10, 540),
+                AutoSize = true
+            };
+
+            nudAlpha = new NumericUpDown
+            {
+                Minimum = 0.1M,
+                Maximum = 1.0M,
+                Increment = 0.1M,
+                DecimalPlaces = 1,
+                Value = 0.5M,
+                Location = new Point(160, 540),
+                Size = new Size(50, 20)
+            };
+
+            // Добавляем элементы на форму
+      
+            Controls.AddRange([lblDepth, nudDepth, lblAlpha, nudAlpha]);
+
             Controls.AddRange([mainPanel, statusLabel, btnNewGame, _btnVsBot, btnHelp]);
 
-            */
-            Controls.AddRange([mainPanel, statusLabel, btnNewGame, _btnVsBot]);
         }
         private void BtnHelp_Click(object sender, EventArgs e)
         {
-            string helpText = @"Ultimate Крестики-Нолики 3x3
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "help.txt");
 
-Правила игры:
-1. Игровое поле состоит из 9 досок 3x3
-2. Первый ход делается в любую клетку
-3. Следующий ход определяется предыдущим:
-   - Играется в доске, соответствующей позиции
-   последнего хода
-4. Побеждает игрок, первым захвативший 3 доски
-   в ряд на главном поле
-
-Управление:
-- ЛКМ - сделать ход
-- Новая игра - сброс игры
-- VS Bot - игра против ИИ
-
-Автор: Ваше имя
-Версия: 1.0 (2024)";
-
-            var infoForm = new Form
+            try
             {
-                Text = "Справка по игре",
-                Size = new Size(450, 350),
-                FormBorderStyle = FormBorderStyle.FixedDialog,
-                StartPosition = FormStartPosition.CenterParent
-            };
+                  string filetext = File.ReadAllText(filePath);
 
-            var textBox = new TextBox
+ 
+                var infoForm = new Form
+                {
+                    Text = "Справка по игре",
+                    Size = new Size(450, 500),
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    StartPosition = FormStartPosition.CenterParent
+                };
+
+                var textBox = new TextBox
+                {
+                    Text = filetext,
+                    Multiline = true,
+                    ReadOnly = true,
+                    Dock = DockStyle.Fill,
+                    Font = new Font("Arial", 10),
+                    BackColor = Color.AliceBlue,
+                    ScrollBars = ScrollBars.Vertical
+                };
+
+                infoForm.Controls.Add(textBox);
+                infoForm.ShowDialog(this);
+            }
+            catch (Exception ex)
             {
-                Text = helpText,
-                Multiline = true,
-                ReadOnly = true,
-                Dock = DockStyle.Fill,
-                Font = new Font("Arial", 10),
-                BackColor = Color.AliceBlue,
-                ScrollBars = ScrollBars.Vertical
-            };
-
-            infoForm.Controls.Add(textBox);
-            infoForm.ShowDialog(this);
+                MessageBox.Show(filePath + " was not found!");
+            }                
         }
-        private void BtnVsBot_Click(object sender, EventArgs e)
+
+        // Отклбчение кнопок
+        private void SetCellsEnabled(bool enabled)
+        {
+            foreach (Control control in mainPanel.Controls)
+            {
+                if (control is SmallBoardUC smallBoard)
+                {
+                    smallBoard.SetCellsEnabled(enabled);
+                }
+            }
+        }
+
+        private void UpdateBotTools(bool botmode)
+        {
+            nudAlpha.Enabled = !_botMode;
+            nudAlpha.BackColor = _botMode ? Color.LightGray : Color.White;
+            nudDepth.Enabled = !_botMode;
+            nudDepth.BackColor = _botMode ? Color.LightGray : Color.White;
+        }
+        private async void BtnVsBot_Click(object sender, EventArgs e)
         {
             _botMode = !_botMode;
+            UpdateBotTools(_botMode);
+
             if (_botMode)
             {
-                _botPlayerX = isPlayerX;
-                _bot.setGameBot(isPlayerX);
-                MakeBotMove();
+                _botTokenSource = new CancellationTokenSource();
+                try
+                {
+                    int depth = (int)nudDepth.Value;
+                    double alpha = (double)nudAlpha.Value;
+                    _botPlayerX = isPlayerX;
+                    _bot.setGameBot(isPlayerX, depth, alpha);
+                    await MakeBotMoveAsync(_botTokenSource.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    // Игнорируем отмену
+                }
+            }
+            else
+            {
+                _botTokenSource?.Cancel();
             }
         }
         // Инициализация новой игры
         private void InitializeGame()
         {
+            _botTokenSource?.Cancel();
             board = new UltimateBoard();
             CreateBoardUI();
             currentActiveBoard = new Point(-1, -1);
             isPlayerX = true;
             _botMode = false;
+            UpdateBotTools(false);
             UpdateStatusLabel();
             HighlightActiveBoard();
         }
@@ -171,36 +239,61 @@ namespace UltimateTicTacToe
         }
 
         // Обработчик клика по клетке малой доски
-        private void SmallBoard_CellClicked(object sender, CellClickedEventArgs e)
+        private async void SmallBoard_CellClicked(object sender, CellClickedEventArgs e)
         {
             var smallBoard = (SmallBoardUC)sender;
             Point bigPosition = new Point(smallBoard.BoardRow, smallBoard.BoardCol);
+
             if (IsMoveValid(bigPosition, e.SmallPosition))
             {
                 MakeMove(bigPosition, e.SmallPosition);
                 UpdateGameState(bigPosition, e.SmallPosition);
                 CheckGlobalWinner();
             }
+
             if (_botMode && (_botPlayerX == isPlayerX))
             {
-                MakeBotMove();
-                Thread.Sleep(1000);
+                await MakeBotMoveAsync(_botTokenSource.Token);
             }
         }
-        private void MakeBotMove()
+
+        private async Task MakeBotMoveAsync(CancellationToken token)
         {
+            if (!_botMode || (_botPlayerX != isPlayerX)) return;
+
             try
             {
-                (Point boardPos, Point cellPos) = _bot.GetBotMove(board, currentActiveBoard);
-                var targetBoard = FindBoardControl(boardPos);
-                targetBoard?.PerformCellClick(cellPos);
+                // Отключаем все клетки, чтобы предотвратить ходы игрока
+                SetCellsEnabled(false);
+                statusLabel.Text = "Bot is thinking...";
+
+                // Здесь можно добавить задержку для имитации "думания" бота, если необходимо
+                await Task.Delay(1000); // Минимальная задержка для обновления UI
+
+                var move = await Task.Run(() =>
+                {
+                    token.ThrowIfCancellationRequested();
+                    return _bot.GetBotMove(board, currentActiveBoard);
+                }, token);
+
+                // Обновляем UI в основном потоке
+                this.Invoke((Action)(() =>
+                {
+                    SetCellsEnabled(true);
+                    var targetBoard = FindBoardControl(move.board);
+                    targetBoard?.PerformCellClick(move.cell);
+                    string player = _botPlayerX ? "O" : "X";
+                    statusLabel.Text = "You play " + player; // Сбрасываем статус
+                }));
             }
-            catch
+            catch (Exception ex) when (ex is OperationCanceledException || ex is InvalidOperationException)
             {
                 _botMode = false;
-                MessageBox.Show("Bot can't make a move!");
+                UpdateBotTools(false);
+                this.Invoke((Action)(() => statusLabel.Text = ""));
             }
         }
+
         private SmallBoardUC FindBoardControl(Point boardPos)
         {
             foreach (Control control in mainPanel.Controls)
@@ -316,18 +409,6 @@ namespace UltimateTicTacToe
 
         // Обработчик новой игры
         private void BtnNewGame_Click(object sender, EventArgs e) => InitializeGame();
-
-        private void InitializeComponent()
-        {
-            SuspendLayout();
-            // 
-            // MainForm
-            // 
-            ClientSize = new Size(284, 261);
-            Name = "MainForm";
-            ResumeLayout(false);
-
-        }
     }
 
     // Класс основной игровой доски (9x9)
@@ -475,7 +556,14 @@ namespace UltimateTicTacToe
             BoardCol = boardCol;
             InitializeBoard();
         }
-
+        // Выключение и включение кнопок
+        public void SetCellsEnabled(bool enabled)
+        {
+            foreach (var btn in cells)
+            {
+                btn.Enabled = enabled;
+            }
+        }
         // Инициализация интерфейса малой доски
         private void InitializeBoard()
         {

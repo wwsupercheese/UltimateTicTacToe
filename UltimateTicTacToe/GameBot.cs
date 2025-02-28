@@ -9,15 +9,17 @@ namespace UltimateTicTacToe
 {
     public class GameBot
     {
-        private const int MaxDepth = 4; // Глубина поиска
+        private int MaxDepth = 4; // Глубина поиска
         private double alpha = 0.7; // Коэффициент точности бота (0 - случайные ходы, 1 - лучший ход
         private char _botSymbol;
         private char _playerSymbol;
         private bool _botIsX;
         private Random rand = new Random();
 
-        public void setGameBot(bool isBotX)
+        public void setGameBot(bool isBotX, int depth, double _alpha)
         {
+            alpha = _alpha;
+            MaxDepth = depth;
             _botIsX = isBotX;
             _botSymbol = isBotX ? 'X' : 'O';
             _playerSymbol = isBotX ? 'O' : 'X';
