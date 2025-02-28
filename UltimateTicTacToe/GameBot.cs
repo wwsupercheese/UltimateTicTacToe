@@ -41,7 +41,6 @@ namespace UltimateTicTacToe
                 moves.Add((move, score));
                 msg += move.ToString() + " " + score + '\n';
             }
-            //MessageBox.Show(msg);
 
             var bestMoves = moves.OrderByDescending(x => x.score).ToList();
             
