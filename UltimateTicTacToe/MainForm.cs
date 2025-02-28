@@ -122,13 +122,14 @@ namespace UltimateTicTacToe
             if (_botMode && (_botPlayerX == isPlayerX))
             {
                 MakeBotMove();
+                Thread.Sleep(1000);
             }
         }
         private void MakeBotMove()
         {
             try
             {
-                var (boardPos, cellPos) = _bot.GetBotMove(board, currentActiveBoard);
+                (Point boardPos, Point cellPos) = _bot.GetBotMove(board, currentActiveBoard);
                 var targetBoard = FindBoardControl(boardPos);
                 targetBoard?.PerformCellClick(cellPos);
             }
@@ -267,11 +268,13 @@ namespace UltimateTicTacToe
                 for (int j = 0; j < 3; j++)
                     boards[i, j] = new SmallBoard();
         }
-        
-        public char getCell(int X, int Y, int x, int y)
+
+        // Получение малой доски
+        public SmallBoard GetSmallBoard(Point point)
         {
-            return boards[X,Y].Cells[x,y];
+            return boards[point.X, point.Y];
         }
+
         // Проверка доступности клетки
         public bool CanMakeMove(Point bigPos, Point smallPos) =>
             boards[bigPos.X, bigPos.Y].IsCellAvailable(smallPos.X, smallPos.Y);
@@ -330,7 +333,7 @@ namespace UltimateTicTacToe
     }
 
     // Класс малой доски (3x3)
-    class SmallBoard
+    public class SmallBoard
     {
         public char[,] Cells = new char[3, 3];
         public char Winner { get; private set; } = '\0';
