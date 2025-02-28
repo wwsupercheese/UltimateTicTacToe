@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\gamebot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\gamebot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\gamebot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\gamebot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\ultimatetictactoe\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,13 +30,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "GameBot.cs",
               "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\GameBot.cs",
               "RelativeDocumentMoniker": "UltimateTicTacToe\\GameBot.cs",
               "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\GameBot.cs",
               "RelativeToolTip": "UltimateTicTacToe\\GameBot.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAkwCcAAAA8AAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAAwwBQAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-27T16:16:24.614Z",
               "EditorCaption": ""
@@ -44,24 +44,24 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MainForm.cs [Design]",
+              "Title": "MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
               "RelativeDocumentMoniker": "UltimateTicTacToe\\MainForm.cs",
-              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs [Design]",
-              "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs [Design]",
+              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-27T15:35:11.902Z",
-              "EditorCaption": " [Design]"
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
               "RelativeDocumentMoniker": "UltimateTicTacToe\\MainForm.cs",
               "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
               "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAowCkAAAAnAAAAAAAAAA==",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAowFYAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-27T11:03:10.497Z",
               "EditorCaption": ""

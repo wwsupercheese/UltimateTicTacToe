@@ -12,8 +12,9 @@ namespace UltimateTicTacToe
         private Panel mainPanel;             // Панель для отрисовки досок
         private Label statusLabel;           // Метка статуса игры
         private Button btnNewGame;           // Кнопка новой игры
+        private Button btnHelp;              // Кнопка справки
 
-        // Добавляем новые поля
+
         private GameBot _bot;
         private bool _botMode;
         private Button _btnVsBot;
@@ -63,12 +64,73 @@ namespace UltimateTicTacToe
             _btnVsBot = new Button
             {
                 Text = "VS Bot",
-                Location = new Point(300, 500),
+                Location = new Point(310, 500),
                 Size = new Size(80, 30)
             };
             _btnVsBot.Click += BtnVsBot_Click;
-            
+
+            /*
+            // Кнопка справки
+            btnHelp = new Button
+            {
+                Text = "Справка",
+                Location = new Point(230, 500),
+                Size = new Size(80, 30),
+                BackColor = Color.LightGoldenrodYellow,
+                FlatStyle = FlatStyle.Popup
+            };
+            btnHelp.Click += BtnHelp_Click;
+
+            // Обновляем позиции существующих кнопок
+            //btnNewGame.Location = new Point(300, 500);
+            //_btnVsBot.Location = new Point(400, 500);
+            Controls.AddRange([mainPanel, statusLabel, btnNewGame, _btnVsBot, btnHelp]);
+
+            */
             Controls.AddRange([mainPanel, statusLabel, btnNewGame, _btnVsBot]);
+        }
+        private void BtnHelp_Click(object sender, EventArgs e)
+        {
+            string helpText = @"Ultimate Крестики-Нолики 3x3
+
+Правила игры:
+1. Игровое поле состоит из 9 досок 3x3
+2. Первый ход делается в любую клетку
+3. Следующий ход определяется предыдущим:
+   - Играется в доске, соответствующей позиции
+   последнего хода
+4. Побеждает игрок, первым захвативший 3 доски
+   в ряд на главном поле
+
+Управление:
+- ЛКМ - сделать ход
+- Новая игра - сброс игры
+- VS Bot - игра против ИИ
+
+Автор: Ваше имя
+Версия: 1.0 (2024)";
+
+            var infoForm = new Form
+            {
+                Text = "Справка по игре",
+                Size = new Size(450, 350),
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                StartPosition = FormStartPosition.CenterParent
+            };
+
+            var textBox = new TextBox
+            {
+                Text = helpText,
+                Multiline = true,
+                ReadOnly = true,
+                Dock = DockStyle.Fill,
+                Font = new Font("Arial", 10),
+                BackColor = Color.AliceBlue,
+                ScrollBars = ScrollBars.Vertical
+            };
+
+            infoForm.Controls.Add(textBox);
+            infoForm.ShowDialog(this);
         }
         private void BtnVsBot_Click(object sender, EventArgs e)
         {
@@ -255,6 +317,17 @@ namespace UltimateTicTacToe
         // Обработчик новой игры
         private void BtnNewGame_Click(object sender, EventArgs e) => InitializeGame();
 
+        private void InitializeComponent()
+        {
+            SuspendLayout();
+            // 
+            // MainForm
+            // 
+            ClientSize = new Size(284, 261);
+            Name = "MainForm";
+            ResumeLayout(false);
+
+        }
     }
 
     // Класс основной игровой доски (9x9)
