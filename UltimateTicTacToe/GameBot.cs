@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualBasic.Devices;
 using System;
 using System.CodeDom.Compiler;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -8,7 +9,8 @@ namespace UltimateTicTacToe
 {
     public class GameBot
     {
-        private const int MaxDepth = 5; // Глубина поиска
+        private const int MaxDepth = 6; // Глубина поиска
+        private double alpha = 0; // Коэффициент точности бота (0 - случайные ходы, 1 - лучший ход
         private char _botSymbol;
         private char _playerSymbol;
         private bool _botIsX;
@@ -39,21 +41,9 @@ namespace UltimateTicTacToe
             }
             //MessageBox.Show(msg);
 
-            (Point board, Point cell) bestMove = moves[0].move;
-            double bestScore = moves[0].score;
-
-            foreach (var move in moves)
-            {
-                if (move.score > bestScore)
-                {
-                    bestScore = move.score;
-                    bestMove = move.move;
-                }
-            }
-
-            var bestMoves= moves.Where(x => x.score == bestScore).ToList();
-
-            return bestMoves[rand.Next(bestMoves.Count)].move;
+            var bestMoves = moves.OrderByDescending(x => x.score).ToList();
+            
+            return bestMoves[rand.Next((int)((1 - alpha) * (bestMoves.Count - 1)))].move;
         }
 
         private double GetScore(UltimateBoard board, Point activeBoard, int depth, bool isOpponentTurn = false)
