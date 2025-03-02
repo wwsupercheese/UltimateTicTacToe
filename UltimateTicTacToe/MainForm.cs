@@ -253,6 +253,7 @@ namespace UltimateTicTacToe
             if (_botMode && (_botPlayerX == isPlayerX))
             {
                 await MakeBotMoveAsync(_botTokenSource.Token);
+                //CheckGlobalWinner();
             }
         }
 

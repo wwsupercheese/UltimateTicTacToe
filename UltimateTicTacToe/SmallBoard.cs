@@ -54,6 +54,10 @@
         // Проверка заполненности доски
         public bool IsFull()
         {
+            if (Winner != '\0')
+            {
+                return true;
+            }
             foreach (char cell in Cells)
             {
                 if (cell == '\0')
