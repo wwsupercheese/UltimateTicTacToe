@@ -1,4 +1,6 @@
-﻿namespace UltimateTicTacToe
+﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+
+namespace UltimateTicTacToe
 {
     public class GameBot
     {
@@ -26,19 +28,27 @@
             }
 
             List<((Point board, Point cell) move, double score)> moves = [];
-
+            var str = "";
             foreach ((Point board, Point cell) move in validMoves)
             {
                 UltimateBoard newBoard = CloneBoard(board);
                 newBoard.MakeMove(move.board, move.cell, _botSymbol);
                 Point nextActiveBoard = newBoard.IsBoardAvailable(move.cell) ? move.cell : new Point(-1);
                 double score = GetScore(newBoard, nextActiveBoard, MaxDepth - 1, true);
+                str += move.ToString() + "|" + score + "\r\n";
                 moves.Add((move, score));
             }
+            MessageBox.Show(str);
             return GetMoveWhithAlpha(moves, alpha).Item1;
         }
         private ((Point, Point), double) GetMoveWhithAlpha(List<((Point, Point), double)> moves, double alpha)
         {
+            if (alpha == 1) // Возвращаем один из лучших
+            {
+                var maxScore = moves.Max(x => x.Item2);
+                var bestMoves = moves.Where(x => x.Item2 == maxScore).ToList();
+                return bestMoves[rand.Next(bestMoves.Count)];
+            }
             moves = [.. moves.OrderByDescending(x => x.Item2)];
             alpha = 1 - alpha;
             List<double> list = [];
@@ -66,41 +76,63 @@
             return moves[index];
         }
 
-        private double GetScore(UltimateBoard board, Point activeBoard, int depth, bool isOpponentTurn = false)
+        private double GetScore(UltimateBoard board, Point activeBoard, int depth, bool isOpponentTurn, double alpha = double.MinValue, double beta = double.MaxValue)
         {
             char globalWinner = board.CheckGlobalWinner();
-            if (globalWinner == _botSymbol)
-            {
-                return 1.0;
-            }
+            if (globalWinner == _botSymbol) return 1.0;
+            if (globalWinner == _playerSymbol) return -1.0;
 
-            if (globalWinner == _playerSymbol)
-            {
-                return -1.0;
-            }
-
-            if (board.IsFull() || depth == 0)
-            {
-                return EvaluatePosition(board);
-            }
+            if (board.IsFull() || depth == 0) return EvaluatePosition(board);
 
             List<(Point board, Point cell)> validMoves = GetValidMoves(board, activeBoard);
-            if (validMoves.Count == 0)
-            {
-                return 0.0;
-            }
+            if (validMoves.Count == 0) return 0.0;
 
-            List<double> scores = [];
-            foreach ((Point board, Point cell) move in validMoves)
+            // Сортировка ходов для улучшения отсечения
+            var orderedMoves = isOpponentTurn
+                ? validMoves.OrderBy(m => EvaluateMovePotential(board, m))
+                : validMoves.OrderByDescending(m => EvaluateMovePotential(board, m));
+
+            double bestScore = isOpponentTurn ? double.MaxValue : double.MinValue;
+
+            foreach (var move in orderedMoves)
             {
                 UltimateBoard newBoard = CloneBoard(board);
                 char currentSymbol = isOpponentTurn ? _playerSymbol : _botSymbol;
                 newBoard.MakeMove(move.board, move.cell, currentSymbol);
                 Point nextActiveBoard = newBoard.IsBoardAvailable(move.cell) ? move.cell : new Point(-1);
-                scores.Add(GetScore(newBoard, nextActiveBoard, depth - 1, !isOpponentTurn));
+
+                double currentScore = GetScore(newBoard, nextActiveBoard, depth - 1, !isOpponentTurn, alpha, beta);
+
+                if (isOpponentTurn)
+                {
+                    bestScore = Math.Min(bestScore, currentScore);
+                    beta = Math.Min(beta, bestScore);
+                }
+                else
+                {
+                    bestScore = Math.Max(bestScore, currentScore);
+                    alpha = Math.Max(alpha, bestScore);
+                }
+
+                if (beta <= alpha) break;
             }
 
-            return isOpponentTurn ? scores.Min() : scores.Max();
+            return bestScore;
+        }
+
+        // Вспомогательная функция для оценки потенциала хода
+        private double EvaluateMovePotential(UltimateBoard board, (Point boardPos, Point cellPos) move)
+        {
+            double score = 0;
+
+            // Приоритет центральной клетки
+            if (move.cellPos.X == 1 && move.cellPos.Y == 1) score += 0.3;
+
+            // Приоритет выигрыша малой доски
+            var targetBoard = board.GetSmallBoard(move.boardPos);
+            if (targetBoard.Winner == _botSymbol) score += 0.5;
+
+            return score;
         }
 
         private double EvaluatePosition(UltimateBoard board)
@@ -145,7 +177,7 @@
                 }
             }
 
-            return Math.Clamp(score, -1.0, 1.0);
+            return score;
         }
 
         private static double EvaluateSmallBoardPotential(SmallBoard board, char player)
@@ -210,7 +242,7 @@
         private static List<(Point board, Point cell)> GetValidMoves(UltimateBoard board, Point activeBoard)
         {
             List<(Point, Point)> moves = [];
-            IEnumerable<Point> targetBoards = activeBoard.X == -1 ? GetAllAvailableBoards(board) : [ activeBoard ];
+            IEnumerable<Point> targetBoards = activeBoard.X == -1 ? GetAllAvailableBoards(board) : [activeBoard];
 
             foreach (Point boardPos in targetBoards)
             {

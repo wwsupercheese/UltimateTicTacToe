@@ -68,6 +68,19 @@
 
             return true;
         }
+
+        // Проверка пустоты доски
+        public bool IsEmpty()
+        {
+            foreach (char cell in Cells)
+            {
+                if (cell != '\0')
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
 }

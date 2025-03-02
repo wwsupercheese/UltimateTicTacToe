@@ -96,8 +96,19 @@
                     return false;
                 }
             }
+            return true;
+        }
 
-
+        // Проверка пустоты всех досок
+        public bool IsEmpty()
+        {
+            foreach (SmallBoard board in boards)
+            {
+                if (!board.IsEmpty())
+                {
+                    return false;
+                }
+            }
             return true;
         }
     }
