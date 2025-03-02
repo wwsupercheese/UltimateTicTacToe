@@ -16,6 +16,7 @@ namespace UltimateTicTacToe
 
         private readonly GameBot _bot;
         public bool _botMode;
+        private bool botCanStoped = false;
         private Button _btnVsBot;
         public bool _botPlayerX;
         private CancellationTokenSource _botTokenSource;
@@ -179,9 +180,20 @@ namespace UltimateTicTacToe
             nudDepth.Enabled = !botmode;
             nudDepth.BackColor = botmode ? Color.LightGray : Color.White;
         }
+
+        private void UpdateBtnVsBot(bool botmode = true)
+        {
+            _btnVsBot.Enabled = !botmode;
+            _btnVsBot.BackColor = botmode ? Color.LightGray : Color.White;
+        }
+
         private async void BtnVsBot_Click(object sender, EventArgs e)
         {
             _botMode = !_botMode;
+            if (!botCanStoped && _botMode)
+            {
+                UpdateBtnVsBot();
+            }
             UpdateBotTools(_botMode);
 
             if (_botMode)
@@ -215,6 +227,7 @@ namespace UltimateTicTacToe
             isPlayerX = true;
             _botMode = false;
             UpdateBotTools(false);
+            UpdateBtnVsBot(false);
             UpdateStatusLabel();
             HighlightActiveBoard();
         }

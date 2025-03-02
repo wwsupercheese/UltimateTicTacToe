@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UltimateTicTacToe")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d6a0af70277364ebc0dc94e41e7661c07dc92a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+dd94430373d02c0213d7f533636c763999bce0a5")]
 [assembly: System.Reflection.AssemblyProductAttribute("UltimateTicTacToe")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UltimateTicTacToe")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
