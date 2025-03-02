@@ -3,16 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\smallboarduc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\smallboarduc.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\smallboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\smallboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\cellclickedeventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\cellclickedeventargs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\ultimateboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\ultimateboard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\gamebot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\gamebot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|c:\\users\\vital\\source\\repos\\ultimatetictactoe\\ultimatetictactoe\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\ultimatetictactoe\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7E5F0401-2DB8-49E7-921D-BED4CE9D0830}|UltimateTicTacToe\\UltimateTicTacToe.csproj|solutionrelative:ultimatetictactoe\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,38 +42,78 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CellClickedEventArgs.cs",
+              "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\CellClickedEventArgs.cs",
+              "RelativeDocumentMoniker": "UltimateTicTacToe\\CellClickedEventArgs.cs",
+              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\CellClickedEventArgs.cs",
+              "RelativeToolTip": "UltimateTicTacToe\\CellClickedEventArgs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T13:20:11.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "SmallBoardUC.cs",
+              "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\SmallBoardUC.cs",
+              "RelativeDocumentMoniker": "UltimateTicTacToe\\SmallBoardUC.cs",
+              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\SmallBoardUC.cs",
+              "RelativeToolTip": "UltimateTicTacToe\\SmallBoardUC.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAAFAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T13:19:47.733Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SmallBoard.cs",
+              "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\SmallBoard.cs",
+              "RelativeDocumentMoniker": "UltimateTicTacToe\\SmallBoard.cs",
+              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\SmallBoard.cs",
+              "RelativeToolTip": "UltimateTicTacToe\\SmallBoard.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAABoAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T13:19:22.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UltimateBoard.cs",
+              "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\UltimateBoard.cs",
+              "RelativeDocumentMoniker": "UltimateTicTacToe\\UltimateBoard.cs",
+              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\UltimateBoard.cs",
+              "RelativeToolTip": "UltimateTicTacToe\\UltimateBoard.cs",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAQwFgAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-02T13:18:52.725Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "GameBot.cs",
               "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\GameBot.cs",
               "RelativeDocumentMoniker": "UltimateTicTacToe\\GameBot.cs",
               "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\GameBot.cs",
               "RelativeToolTip": "UltimateTicTacToe\\GameBot.cs",
-              "ViewState": "AgIAABMAAAAAAAAAAAAgwB0AAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAOMAAAAAAAAAAAAuwOcAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-27T16:16:24.614Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainForm.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
-              "RelativeDocumentMoniker": "UltimateTicTacToe\\MainForm.cs",
-              "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs [Design]",
-              "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-27T15:35:11.902Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
               "RelativeDocumentMoniker": "UltimateTicTacToe\\MainForm.cs",
               "ToolTip": "C:\\Users\\Vital\\source\\repos\\UltimateTicTacToe\\UltimateTicTacToe\\MainForm.cs",
               "RelativeToolTip": "UltimateTicTacToe\\MainForm.cs",
-              "ViewState": "AgIAAAgBAAAAAAAAAAAAABYBAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAL0AAAAAAAAAAAAmwBQBAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-27T11:03:10.497Z",
               "EditorCaption": ""

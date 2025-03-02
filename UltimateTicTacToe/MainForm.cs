@@ -1,7 +1,3 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-
 namespace UltimateTicTacToe
 {
     public partial class MainForm : Form
@@ -13,12 +9,12 @@ namespace UltimateTicTacToe
         private Label statusLabel;           // Метка статуса игры
         private Button btnNewGame;           // Кнопка новой игры
         private Button btnHelp;              // Кнопка справки
-        private NumericUpDown nudDepth;      
+        private NumericUpDown nudDepth;
         private NumericUpDown nudAlpha;
         private Label lblDepth;
         private Label lblAlpha;
 
-        private GameBot _bot;
+        private readonly GameBot _bot;
         public bool _botMode;
         private Button _btnVsBot;
         public bool _botPlayerX;
@@ -72,7 +68,7 @@ namespace UltimateTicTacToe
             };
             _btnVsBot.Click += BtnVsBot_Click;
 
-            
+
             // Кнопка справки
             btnHelp = new Button
             {
@@ -87,7 +83,7 @@ namespace UltimateTicTacToe
             // Элементы управления ботом
             lblDepth = new Label
             {
-                Text = "Глубина поиска:",
+                Text = "Глубина:",
                 Location = new Point(10, 510),
                 AutoSize = true
             };
@@ -97,13 +93,13 @@ namespace UltimateTicTacToe
                 Minimum = 1,
                 Maximum = 5,
                 Value = 3,
-                Location = new Point(160, 510),
+                Location = new Point(140, 510),
                 Size = new Size(50, 20)
             };
 
             lblAlpha = new Label
             {
-                Text = "Коэффициент точности:",
+                Text = "Точность:",
                 Location = new Point(10, 540),
                 AutoSize = true
             };
@@ -115,12 +111,12 @@ namespace UltimateTicTacToe
                 Increment = 0.1M,
                 DecimalPlaces = 1,
                 Value = 0.5M,
-                Location = new Point(160, 540),
+                Location = new Point(140, 540),
                 Size = new Size(50, 20)
             };
 
             // Добавляем элементы на форму
-      
+
             Controls.AddRange([lblDepth, nudDepth, lblAlpha, nudAlpha]);
 
             Controls.AddRange([mainPanel, statusLabel, btnNewGame, _btnVsBot, btnHelp]);
@@ -129,21 +125,22 @@ namespace UltimateTicTacToe
         private void BtnHelp_Click(object sender, EventArgs e)
         {
             string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "help.txt");
-
             try
             {
-                  string filetext = File.ReadAllText(filePath);
+                string filetext = File.ReadAllText(filePath);
+                filetext = filetext.Replace("\t", new string(' ', 4)); // Заменяем табуляцию на 4 пробела
+                filetext = filetext.Replace("\n", "\r\n");
 
- 
-                var infoForm = new Form
+
+                Form infoForm = new()
                 {
                     Text = "Справка по игре",
-                    Size = new Size(450, 500),
+                    Size = new Size(450, 760),
                     FormBorderStyle = FormBorderStyle.FixedDialog,
                     StartPosition = FormStartPosition.CenterParent
                 };
 
-                var textBox = new TextBox
+                TextBox textBox = new()
                 {
                     Text = filetext,
                     Multiline = true,
@@ -155,12 +152,12 @@ namespace UltimateTicTacToe
                 };
 
                 infoForm.Controls.Add(textBox);
-                infoForm.ShowDialog(this);
+                _ = infoForm.ShowDialog(this);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show(filePath + " was not found!");
-            }                
+                _ = MessageBox.Show(filePath + " was not found!");
+            }
         }
 
         // Отклбчение кнопок
@@ -177,10 +174,10 @@ namespace UltimateTicTacToe
 
         private void UpdateBotTools(bool botmode)
         {
-            nudAlpha.Enabled = !_botMode;
-            nudAlpha.BackColor = _botMode ? Color.LightGray : Color.White;
-            nudDepth.Enabled = !_botMode;
-            nudDepth.BackColor = _botMode ? Color.LightGray : Color.White;
+            nudAlpha.Enabled = !botmode;
+            nudAlpha.BackColor = botmode ? Color.LightGray : Color.White;
+            nudDepth.Enabled = !botmode;
+            nudDepth.BackColor = botmode ? Color.LightGray : Color.White;
         }
         private async void BtnVsBot_Click(object sender, EventArgs e)
         {
@@ -195,7 +192,7 @@ namespace UltimateTicTacToe
                     int depth = (int)nudDepth.Value;
                     double alpha = (double)nudAlpha.Value;
                     _botPlayerX = isPlayerX;
-                    _bot.setGameBot(isPlayerX, depth, alpha);
+                    _bot.SetGameBot(isPlayerX, depth, alpha);
                     await MakeBotMoveAsync(_botTokenSource.Token);
                 }
                 catch (OperationCanceledException)
@@ -230,8 +227,10 @@ namespace UltimateTicTacToe
             {
                 for (int bigCol = 0; bigCol < 3; bigCol++)
                 {
-                    var smallBoard = new SmallBoardUC(bigRow, bigCol);
-                    smallBoard.Location = new Point(bigCol * 160, bigRow * 160);
+                    SmallBoardUC smallBoard = new(bigRow, bigCol)
+                    {
+                        Location = new Point(bigCol * 160, bigRow * 160)
+                    };
                     smallBoard.CellClicked += SmallBoard_CellClicked;
                     mainPanel.Controls.Add(smallBoard);
                 }
@@ -241,8 +240,8 @@ namespace UltimateTicTacToe
         // Обработчик клика по клетке малой доски
         private async void SmallBoard_CellClicked(object sender, CellClickedEventArgs e)
         {
-            var smallBoard = (SmallBoardUC)sender;
-            Point bigPosition = new Point(smallBoard.BoardRow, smallBoard.BoardCol);
+            SmallBoardUC smallBoard = (SmallBoardUC)sender;
+            Point bigPosition = new(smallBoard.BoardRow, smallBoard.BoardCol);
 
             if (IsMoveValid(bigPosition, e.SmallPosition))
             {
@@ -259,7 +258,10 @@ namespace UltimateTicTacToe
 
         private async Task MakeBotMoveAsync(CancellationToken token)
         {
-            if (!_botMode || (_botPlayerX != isPlayerX)) return;
+            if (!_botMode || (_botPlayerX != isPlayerX))
+            {
+                return;
+            }
 
             try
             {
@@ -268,40 +270,42 @@ namespace UltimateTicTacToe
                 statusLabel.Text = "Bot is thinking...";
 
                 // Здесь можно добавить задержку для имитации "думания" бота, если необходимо
-                await Task.Delay(1000); // Минимальная задержка для обновления UI
+                await Task.Delay(1000, token); // Минимальная задержка для обновления UI
 
-                var move = await Task.Run(() =>
+                (Point board, Point cell) move = await Task.Run(() =>
                 {
                     token.ThrowIfCancellationRequested();
                     return _bot.GetBotMove(board, currentActiveBoard);
                 }, token);
 
                 // Обновляем UI в основном потоке
-                this.Invoke((Action)(() =>
+                Invoke(() =>
                 {
                     SetCellsEnabled(true);
-                    var targetBoard = FindBoardControl(move.board);
+                    SmallBoardUC targetBoard = FindBoardControl(move.board);
                     targetBoard?.PerformCellClick(move.cell);
                     string player = _botPlayerX ? "O" : "X";
                     statusLabel.Text = "You play " + player; // Сбрасываем статус
-                }));
+                });
             }
-            catch (Exception ex) when (ex is OperationCanceledException || ex is InvalidOperationException)
+            catch (Exception ex) when (ex is OperationCanceledException or InvalidOperationException)
             {
                 _botMode = false;
                 UpdateBotTools(false);
-                this.Invoke((Action)(() => statusLabel.Text = ""));
+                Invoke((Action)(() => statusLabel.Text = ""));
             }
         }
 
-        private SmallBoardUC FindBoardControl(Point boardPos)
+        private SmallBoardUC? FindBoardControl(Point boardPos)
         {
             foreach (Control control in mainPanel.Controls)
             {
                 if (control is SmallBoardUC sb &&
                     sb.BoardRow == boardPos.X &&
                     sb.BoardCol == boardPos.Y)
+                {
                     return sb;
+                }
             }
             return null;
         }
@@ -340,7 +344,9 @@ namespace UltimateTicTacToe
         {
             // Проверка победы в малой доске
             if (board.CheckSmallBoardWinner(bigPos))
+            {
                 MarkBoardAsWon(bigPos);
+            }
 
             // Определение следующей активной доски
             currentActiveBoard = board.IsBoardAvailable(smallPos) ? smallPos : new Point(-1);
@@ -388,12 +394,12 @@ namespace UltimateTicTacToe
             char winner = board.CheckGlobalWinner();
             if (winner != '\0')
             {
-                MessageBox.Show($"Player {winner} wins!");
+                _ = MessageBox.Show($"Player {winner} wins!");
                 InitializeGame();
             }
             else if (board.IsFull())
             {
-                MessageBox.Show("Game ended in a draw!");
+                _ = MessageBox.Show("Game ended in a draw!");
                 InitializeGame();
             }
         }
@@ -408,251 +414,9 @@ namespace UltimateTicTacToe
         }
 
         // Обработчик новой игры
-        private void BtnNewGame_Click(object sender, EventArgs e) => InitializeGame();
-    }
-
-    // Класс основной игровой доски (9x9)
-    public class UltimateBoard
-    {
-        readonly SmallBoard[,] boards = new SmallBoard[3, 3];
-
-        public UltimateBoard()
+        private void BtnNewGame_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 3; i++)
-                for (int j = 0; j < 3; j++)
-                    boards[i, j] = new SmallBoard();
-        }
-
-        // Получение малой доски
-        public SmallBoard GetSmallBoard(Point point)
-        {
-            return boards[point.X, point.Y];
-        }
-
-        // Проверка доступности клетки
-        public bool CanMakeMove(Point bigPos, Point smallPos) =>
-            boards[bigPos.X, bigPos.Y].IsCellAvailable(smallPos.X, smallPos.Y);
-
-        // Совершение хода
-        public void MakeMove(Point bigPos, Point smallPos, char player) =>
-            boards[bigPos.X, bigPos.Y].SetCell(smallPos.X, smallPos.Y, player);
-
-        // Проверка победы в малой доске
-        public bool CheckSmallBoardWinner(Point bigPos) =>
-            boards[bigPos.X, bigPos.Y].Winner != '\0';
-
-        // Получение победителя малой доски
-        public char GetSmallBoardWinner(Point bigPos) =>
-            boards[bigPos.X, bigPos.Y].Winner;
-
-        // Проверка доступности доски для ходов
-        public bool IsBoardAvailable(Point boardPos) =>
-            boards[boardPos.X, boardPos.Y].Winner == '\0' &&
-            !boards[boardPos.X, boardPos.Y].IsFull();
-
-        // Проверка глобальной победы
-        public char CheckGlobalWinner()
-        {
-            // Проверка строк
-            for (int row = 0; row < 3; row++)
-                if (CheckTriplet(boards[row, 0].Winner, boards[row, 1].Winner, boards[row, 2].Winner))
-                    return boards[row, 0].Winner;
-
-            // Проверка столбцов
-            for (int col = 0; col < 3; col++)
-                if (CheckTriplet(boards[0, col].Winner, boards[1, col].Winner, boards[2, col].Winner))
-                    return boards[0, col].Winner;
-
-            // Проверка диагоналей
-            if (CheckTriplet(boards[0, 0].Winner, boards[1, 1].Winner, boards[2, 2].Winner))
-                return boards[0, 0].Winner;
-
-            if (CheckTriplet(boards[0, 2].Winner, boards[1, 1].Winner, boards[2, 0].Winner))
-                return boards[0, 2].Winner;
-
-            return '\0';
-        }
-
-        // Проверка трех одинаковых символов
-        private bool CheckTriplet(char a, char b, char c) =>
-            a != '\0' && a == b && b == c;
-
-        // Проверка заполненности всех досок
-        public bool IsFull()
-        {
-            foreach (var board in boards)
-                if (!board.IsFull()) return false;
-            return true;
-        }
-    }
-
-    // Класс малой доски (3x3)
-    public class SmallBoard
-    {
-        public char[,] Cells = new char[3, 3];
-        public char Winner { get; private set; } = '\0';
-
-        // Проверка доступности клетки
-        public bool IsCellAvailable(int row, int col) =>
-            Cells[row, col] == '\0' && Winner == '\0';
-
-        // Установка символа в клетку
-        public void SetCell(int row, int col, char player)
-        {
-            Cells[row, col] = player;
-            CheckWinner();
-        }
-
-        // Проверка победы в доске
-        private void CheckWinner()
-        {
-            // Проверка строк и столбцов
-            for (int i = 0; i < 3; i++)
-            {
-                if (CheckLine(Cells[i, 0], Cells[i, 1], Cells[i, 2]) ||
-                    CheckLine(Cells[0, i], Cells[1, i], Cells[2, i]))
-                    return;
-            }
-
-            // Проверка диагоналей
-            if (CheckLine(Cells[0, 0], Cells[1, 1], Cells[2, 2]) ||
-                CheckLine(Cells[0, 2], Cells[1, 1], Cells[2, 0]))
-                return;
-        }
-
-        // Проверка линии из трех одинаковых символов
-        private bool CheckLine(char a, char b, char c)
-        {
-            if (a != '\0' && a == b && b == c)
-            {
-                Winner = a;
-                return true;
-            }
-            return false;
-        }
-
-        // Проверка заполненности доски
-        public bool IsFull()
-        {
-            foreach (char cell in Cells)
-                if (cell == '\0') return false;
-            return true;
-        }
-    }
-
-    // Пользовательский элемент управления для малой доски
-    class SmallBoardUC : UserControl
-    {
-        public int BoardRow { get; }     // Позиция доски в основной сетке
-        public int BoardCol { get; }
-        private readonly Button[,] cells = new Button[3, 3];
-        private char winner = '\0';      // Победитель в текущей доске
-
-        public event EventHandler<CellClickedEventArgs> CellClicked;
-
-        public SmallBoardUC(int boardRow, int boardCol)
-        {
-            BoardRow = boardRow;
-            BoardCol = boardCol;
-            InitializeBoard();
-        }
-        // Выключение и включение кнопок
-        public void SetCellsEnabled(bool enabled)
-        {
-            foreach (var btn in cells)
-            {
-                btn.Enabled = enabled;
-            }
-        }
-        // Инициализация интерфейса малой доски
-        private void InitializeBoard()
-        {
-            Size = new Size(150, 150);
-            BackColor = Color.White;
-
-            for (int row = 0; row < 3; row++)
-            {
-                for (int col = 0; col < 3; col++)
-                {
-                    cells[row, col] = new Button
-                    {
-                        Size = new Size(50, 50),
-                        Location = new Point(col * 50, row * 50),
-                        Tag = new Point(row, col),
-                        FlatStyle = FlatStyle.Flat,
-                        Font = new Font("Arial", 16),
-                        //BackColor = Color.White,
-                        TabStop = false,
-                    };
-                    cells[row, col].Click += Cell_Click;
-                    Controls.Add(cells[row, col]);
-                }
-            }
-        }
-
-        // Обновление состояния доступности клеток
-        public void UpdateCellsAccessibility(bool isActive, Func<Point, bool> isCellAvailable)
-        {
-            if (winner != '\0') return; // Не обновляем выигранные доски
-
-            for (int row = 0; row < 3; row++)
-            {
-                for (int col = 0; col < 3; col++)
-                {
-                    var btn = cells[row, col];
-                    var pos = new Point(row, col);
-                    bool available = isActive && isCellAvailable(pos);
-                    btn.Enabled = available;
-                    btn.BackColor = available ? Color.White : Color.LightGray;
-                }
-            }
-        }
-
-        // Обработчик клика по клетке
-        private void Cell_Click(object sender, EventArgs e)
-        {
-            var btn = (Button)sender;
-            var pos = (Point)btn.Tag;
-            CellClicked?.Invoke(this, new CellClickedEventArgs(
-                new Point(BoardRow, BoardCol), pos));
-        }
-
-        // Обновление клетки после хода
-        public void UpdateCell(int row, int col, string symbol)
-        {
-            cells[row, col].Text = symbol;
-            cells[row, col].Enabled = false;
-            cells[row, col].BackColor = Color.White;
-        }
-
-        // Пометка доски как выигранной
-        public void MarkAsWon(char winner)
-        {
-            this.winner = winner;
-            BackColor = winner == 'X' ? Color.LightBlue : Color.LightPink;
-            foreach (Button btn in cells)
-            {
-                btn.Enabled = false;
-                btn.BackColor = BackColor;
-            }
-        }
-        public void PerformCellClick(Point cellPos)
-        {
-            if (cells[cellPos.X, cellPos.Y].Enabled)
-                cells[cellPos.X, cellPos.Y].PerformClick();
-        }
-    }
-    
-    // Аргументы события клика по клетке
-    class CellClickedEventArgs : EventArgs
-    {
-        public Point BigPosition { get; } // Позиция малой доски в основной
-        public Point SmallPosition { get; } // Позиция клетки в малой доске
-
-        public CellClickedEventArgs(Point bigPos, Point smallPos)
-        {
-            BigPosition = bigPos;
-            SmallPosition = smallPos;
+            InitializeGame();
         }
     }
 }
