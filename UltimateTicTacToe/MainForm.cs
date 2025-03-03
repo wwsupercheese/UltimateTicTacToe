@@ -107,7 +107,7 @@ namespace UltimateTicTacToe
 
             nudAlpha = new NumericUpDown
             {
-                Minimum = 0.1M,
+                Minimum = 0.0M,
                 Maximum = 1.0M,
                 Increment = 0.1M,
                 DecimalPlaces = 1,

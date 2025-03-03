@@ -1,4 +1,6 @@
-﻿using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
+﻿using Microsoft.VisualBasic;
+using static System.Formats.Asn1.AsnWriter;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Rebar;
 
 namespace UltimateTicTacToe
 {
@@ -38,33 +40,37 @@ namespace UltimateTicTacToe
                 str += move.ToString() + "|" + score + "\r\n";
                 moves.Add((move, score));
             }
-            MessageBox.Show(str);
+            //MessageBox.Show(str);
             return GetMoveWhithAlpha(moves, alpha).Item1;
         }
         private ((Point, Point), double) GetMoveWhithAlpha(List<((Point, Point), double)> moves, double alpha)
         {
+            var maxScore = moves.Max(x => x.Item2);
+            
             if (alpha == 1) // Возвращаем один из лучших
             {
-                var maxScore = moves.Max(x => x.Item2);
                 var bestMoves = moves.Where(x => x.Item2 == maxScore).ToList();
-                return bestMoves[rand.Next(bestMoves.Count)];
+                //return bestMoves[rand.Next(bestMoves.Count)];
             }
             moves = [.. moves.OrderByDescending(x => x.Item2)];
             alpha = 1 - alpha;
             List<double> list = [];
             for (int i = 0; i < moves.Count; i++)
             {
-                list.Add(((1.0 - alpha) / Math.Pow(i + 1, 5)) + (alpha / moves.Count));
+                var score = ((1.0 - alpha) / Math.Pow(maxScore - moves[i].Item2 + 1, 5)) + (alpha / moves.Count);
+                list.Add(score);
             }
-
             double s = list.Sum();
 
             list[0] = list[0] / s;
-            for (int i = 1; i < list.Count - 1; i++)
+            //var str = moves[0].ToString() + "|" + list[0] + "\r\n";
+            for (int i = 1; i < list.Count; i++)
             {
                 list[i] = list[i - 1] + (list[i] / s);
+                //str += moves[i].ToString() + "|" + (list[i] - list[i-1]) + "\r\n";
             }
             list[^1] = 1;
+            //MessageBox.Show(str);
 
             int index = 0;
             double r = rand.NextDouble();
@@ -79,8 +85,8 @@ namespace UltimateTicTacToe
         private double GetScore(UltimateBoard board, Point activeBoard, int depth, bool isOpponentTurn, double alpha = double.MinValue, double beta = double.MaxValue)
         {
             char globalWinner = board.CheckGlobalWinner();
-            if (globalWinner == _botSymbol) return 1.0;
-            if (globalWinner == _playerSymbol) return -1.0;
+            if (globalWinner == _botSymbol) return 100.0;
+            if (globalWinner == _playerSymbol) return -100.0;
 
             if (board.IsFull() || depth == 0) return EvaluatePosition(board);
 
