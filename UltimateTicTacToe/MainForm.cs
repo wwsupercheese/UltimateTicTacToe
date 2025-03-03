@@ -92,8 +92,8 @@ namespace UltimateTicTacToe
             nudDepth = new NumericUpDown
             {
                 Minimum = 1,
-                Maximum = 10,
-                Value = 3,
+                Maximum = 8,
+                Value = 4,
                 Location = new Point(140, 510),
                 Size = new Size(50, 20)
             };
@@ -111,7 +111,7 @@ namespace UltimateTicTacToe
                 Maximum = 1.0M,
                 Increment = 0.1M,
                 DecimalPlaces = 1,
-                Value = 0.5M,
+                Value = 0.7M,
                 Location = new Point(140, 540),
                 Size = new Size(50, 20)
             };

@@ -37,7 +37,7 @@ namespace UltimateTicTacToe
                 newBoard.MakeMove(move.board, move.cell, _botSymbol);
                 Point nextActiveBoard = newBoard.IsBoardAvailable(move.cell) ? move.cell : new Point(-1);
                 double score = GetScore(newBoard, nextActiveBoard, MaxDepth - 1, true);
-                str += move.ToString() + "|" + score + "\r\n";
+                str += move.cell.ToString() + "|" + score + "\r\n";
                 moves.Add((move, score));
             }
             //MessageBox.Show(str);
@@ -50,7 +50,7 @@ namespace UltimateTicTacToe
             if (alpha == 1) // Возвращаем один из лучших
             {
                 var bestMoves = moves.Where(x => x.Item2 == maxScore).ToList();
-                //return bestMoves[rand.Next(bestMoves.Count)];
+                return bestMoves[rand.Next(bestMoves.Count)];
             }
             moves = [.. moves.OrderByDescending(x => x.Item2)];
             alpha = 1 - alpha;
