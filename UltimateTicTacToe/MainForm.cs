@@ -93,7 +93,7 @@ namespace UltimateTicTacToe
             {
                 Minimum = 1,
                 Maximum = 8,
-                Value = 4,
+                Value = 7,
                 Location = new Point(140, 510),
                 Size = new Size(50, 20)
             };
@@ -111,7 +111,7 @@ namespace UltimateTicTacToe
                 Maximum = 1.0M,
                 Increment = 0.1M,
                 DecimalPlaces = 1,
-                Value = 0.7M,
+                Value = 0.9M,
                 Location = new Point(140, 540),
                 Size = new Size(50, 20)
             };
